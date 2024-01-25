@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -6,7 +7,7 @@ const ejs = require('ejs');
 const Task = require('./models/task');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT ||3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -69,11 +70,11 @@ app.get('/task', async (req, res) => {
 
 //listing on port
 
-app.listen(process.env.PORT || port,() => console.log('Listening on port${port}'))
+// app.listen(process.env.PORT || port,() => console.log('Listening on port${port}'))
 
-// app.listen(port, () => {
-//   console.log(`Server is running on http://localhost:${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
 
 
 
