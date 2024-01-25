@@ -13,13 +13,25 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-mongoose.connect('mongodb+srv://draut0510:UF2i6dMHzuEMvStX@cluster0.pkeo0a2.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
+mongoose.set('strictQuery',false);
 
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once('open', () => {
-  console.log('Connected to MongoDB');
-});
+const connectDB = async () => {
+  try{
+    const db = await mongoose.connect(process.env.MONGO_URL);
+    console.log('mongodb Connected ${db.connection.host}');
+  }
+  catch(error){
+    console.log(error);
+    process.exit(1);
+  }
+}
+// mongoose.connect('mongodb+srv://draut0510:UF2i6dMHzuEMvStX@cluster0.pkeo0a2.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+// const db = mongoose.connection;
+
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// db.once('open', () => {
+//   console.log('Connected to MongoDB');
+// });
 
 app.get('/task', async (req, res) => {
   try {
@@ -72,8 +84,10 @@ app.get('/task', async (req, res) => {
 
 // app.listen(process.env.PORT || port,() => console.log('Listening on port${port}'))
 
+connectDB().then(() => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
+})
 });
 
 
