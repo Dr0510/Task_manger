@@ -1,0 +1,59 @@
+<!-- views/compose.ejs -->
+<%- include("partials/header"); -%>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+  <h1>Task Manager</h1>
+
+  <% if (tasks && tasks.length > 0) { %>
+    <ul>
+      <% tasks.forEach(function(task) { %>
+        <li>
+          <strong><%= task.title %></strong><br>
+          <span><%= task.description %></span><br>
+          <span>Due Date: <%= task.due_date ? task.due_date.toDateString() : 'Not specified' %></span><br>
+          <span>Priority: <%= task.priority %></span><br>
+          <span>Status: <%= task.status %></span><br>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>No tasks found.</p>
+  <% } %>
+
+  <hr>
+
+  <h2>Create a New Task</h2>
+
+  <form action="/task" method="post">
+    <label for="title"id="t1">Title:<br></label>
+    <input type="text" id="title" name="title" required><br>
+
+    <label for="description"id="t2">Description:</label>
+    <textarea id="description" name="description" required></textarea><br>
+
+    <label for="due_date"id = "t3">Due Date:</label>
+    <input type="date" id="due_date" name="due_date"><br>
+
+    <label for="priority"id="t4">Priority:</label>
+    <select id="priority" name="priority">
+      <option value="High">High</option>
+      <option value="Medium">Medium</option>
+      <option value="Low">Low</option>
+    </select><br>
+
+    <input type="submit" value="Create Task" id ="submitB">
+  </form>
+
+</body>
+
+</html>
+<%- include("partials/footer"); -%>

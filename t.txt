@@ -1,0 +1,5 @@
+u:draut0510
+P:UF2i6dMHzuEMvStX
+ip:106.210.147.214/32
+
+Created as part of the Auto Setup process
